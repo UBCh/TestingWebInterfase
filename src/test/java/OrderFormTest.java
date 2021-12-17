@@ -8,15 +8,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 public class OrderFormTest {
-    private WebDriver driver;
+    WebDriver driver;
 
 
 
     @BeforeAll
-    static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "driver/vin/chromedriver.exe");
+    static void setupClass() {
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -26,14 +26,18 @@ public class OrderFormTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-         //driver = new ChromeDriver();
+        //driver = new ChromeDriver();
     }
 
     @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
+    void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
+
+
+
 
 
 
